@@ -8,6 +8,31 @@ actually receives. FXLens answers the question travellers really have:
 
 ---
 
+## Screenshots
+
+### Everything on one screen
+No tabs, no drill-down — converter, 30-day trend, true-cost breakdown and favourites are all visible at once.
+
+![FXLens light theme overview](docs/screenshots/01-light-overview.png)
+
+### Travel Budgeting mode · dark theme
+One base amount converted into 5 major currencies simultaneously, each row showing both the mid-market figure and what you would realistically receive.
+
+![Travel budgeting mode in dark theme](docs/screenshots/02-dark-travel.png)
+
+### Search across 160+ currencies
+Matches on currency name as well as code — searching "pound" surfaces GBP, EGP, LBP and SDG. Fully keyboard operable.
+
+![Currency search dropdown](docs/screenshots/03-currency-search.png)
+
+### Responsive
+Single-column reflow, rotated swap control, 2×2 stat grid, and ≥44px touch targets.
+
+<img src="docs/screenshots/04-mobile.png" alt="FXLens on mobile" width="340">
+
+
+---
+
 ## Quick start
 
 ```bash
