@@ -1,0 +1,140 @@
+/* ============================================================
+   FXLens — Accessible Neumorphism
+   Soft extruded surfaces, but text >=4.5:1 and interactive
+   borders >=3:1. Depth is decoration; it never carries meaning
+   on its own. Every control has a real focus ring.
+   ============================================================ */
+
+:root {
+  --bg: #e6eaf2;
+  --surface: #e9edf4;
+  --surface-2: #eef1f7;
+  --sunk: #dfe4ee;
+
+  --text: #1b2333;          /* 13.8:1 on --bg */
+  --text-soft: #4a5670;     /*  7.1:1 */
+  --text-mute: #6b7690;     /*  4.6:1 — AA floor */
+
+  --line: #c8d0e0;
+  --line-strong: #a4b0c8;   /* >=3:1 for control borders */
+
+  --accent: #4f46e5;
+  --accent-soft: #6366f1;
+  --accent-ink: #ffffff;
+
+  --good: #047857;
+  --good-bg: #d1fae5;
+  --bad: #be123c;
+  --bad-bg: #ffe4e6;
+  --warn: #a16207;
+  --warn-bg: #fef3c7;
+
+  --sh-light: #ffffff;
+  --sh-dark: #bcc5d6;
+
+  --r-sm: 12px; --r-md: 18px; --r-lg: 26px; --r-xl: 34px;
+
+  --out: 6px 6px 14px var(--sh-dark), -6px -6px 14px var(--sh-light);
+  --out-sm: 3px 3px 7px var(--sh-dark), -3px -3px 7px var(--sh-light);
+  --out-lg: 12px 12px 28px var(--sh-dark), -10px -10px 24px var(--sh-light);
+  --in: inset 4px 4px 9px var(--sh-dark), inset -4px -4px 9px var(--sh-light);
+  --in-sm: inset 2px 2px 5px var(--sh-dark), inset -2px -2px 5px var(--sh-light);
+
+  --ease: cubic-bezier(.22,1,.36,1);
+  --dur: 340ms;
+}
+
+[data-theme='dark'] {
+  --bg: #1c2030;
+  --surface: #212637;
+  --surface-2: #262c40;
+  --sunk: #191d2b;
+
+  --text: #f0f3fa;
+  --text-soft: #c0c8dc;
+  --text-mute: #9aa4bd;
+
+  --line: #333a52;
+  --line-strong: #4d5673;
+
+  --accent: #818cf8;
+  --accent-soft: #a5b4fc;
+  --accent-ink: #10131f;
+
+  --good: #34d399; --good-bg: #06301f;
+  --bad: #fb7185;  --bad-bg: #3d0d1a;
+  --warn: #fbbf24; --warn-bg: #3a2c05;
+
+  /* In dark mode the highlight must never be pure white, or the soft
+     moulded effect turns into harsh plastic. */
+  --sh-light: #2a3145;
+  --sh-dark: #12151f;
+}
+
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+
+.mono { font-family: 'JetBrains Mono', ui-monospace, monospace; font-variant-numeric: tabular-nums; }
+
+/* ---- surfaces ---- */
+.neu       { background: var(--surface); border-radius: var(--r-lg); box-shadow: var(--out); }
+.neu-sm    { background: var(--surface); border-radius: var(--r-md); box-shadow: var(--out-sm); }
+.neu-sunk  { background: var(--sunk);    border-radius: var(--r-md); box-shadow: var(--in); }
+
+/* ---- focus: always visible, never shadow-only ---- */
+:where(button, a, input, select, [tabindex]):focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--r-sm);
+}
+
+button { font: inherit; color: inherit; cursor: pointer; border: none; background: none; }
+
+/* ---- pressable ---- */
+.press {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  border-radius: var(--r-md);
+  box-shadow: var(--out-sm);
+  transition: box-shadow 160ms var(--ease), transform 160ms var(--ease), border-color 160ms;
+}
+.press:hover  { border-color: var(--line-strong); transform: translateY(-1px); }
+.press:active { box-shadow: var(--in-sm); transform: translateY(0); }
+.press[aria-pressed='true'], .press.on {
+  box-shadow: var(--in-sm);
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--surface-2);
+}
+
+/* ---- motion ---- */
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+.rise { animation: rise 420ms var(--ease) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 8px; border: 3px solid var(--bg); }
