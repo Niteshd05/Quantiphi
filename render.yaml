@@ -1,0 +1,36 @@
+services:
+  - type: web
+    name: fxlens
+    runtime: node
+    plan: free
+    buildCommand: npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+
+# ---------------------------------------------------------------------------
+# Persistence note
+#
+# This config targets Render's FREE plan, which cannot attach a persistent
+# disk. The app still runs correctly — SQLite writes to the container's
+# ephemeral filesystem — but the database resets whenever the service
+# restarts or redeploys, so saved favourites do not survive.
+#
+# Everything else is unaffected: conversion, charts, travel mode and the
+# provider failover chain all work, since rates are re-fetched anyway.
+#
+# To make favourites durable, move to the Starter plan ($7/mo) and add:
+#
+#   plan: starter
+#   envVars:
+#     - key: DB_PATH
+#       value: /var/data/fxlens.db
+#   disk:
+#     name: fxlens-data
+#     mountPath: /var/data
+#     sizeGB: 1
+#
+# DB_PATH is read in server/src/db/index.js and needs no code change.
+# ---------------------------------------------------------------------------

@@ -1,9 +1,17 @@
 import Database from 'better-sqlite3';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
+import fs from 'node:fs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+// DB_PATH lets a host point the database at a mounted persistent disk. Without
+// it we fall back to the repo directory, which is fine locally but is wiped on
+// every deploy of an ephemeral-filesystem host — set DB_PATH in production so
+// favourites and cached rates survive restarts.
 const DB_PATH = process.env.DB_PATH || path.join(__dirname, '..', '..', 'fxlens.db');
+
+fs.mkdirSync(path.dirname(DB_PATH), { recursive: true });
 
 export const db = new Database(DB_PATH);
 db.pragma('journal_mode = WAL');

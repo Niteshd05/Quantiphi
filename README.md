@@ -51,9 +51,13 @@ keyless endpoints out of the box.
 ### Production (single deployable unit)
 
 ```bash
-cd client && npm install && npm run build   # emits client/dist
-cd ../server && npm install && npm start    # serves API + built SPA on :5175
+npm run build   # installs both halves, builds client/dist
+npm start       # serves API + built SPA on :5175
 ```
+
+Deploys to Render, Railway or Fly.io with no code changes — a `render.yaml`
+blueprint is included. See **[DEPLOYMENT.md](DEPLOYMENT.md)** for per-host
+steps, persistence notes, and why Vercel needs a hosted database first.
 
 ---
 

@@ -1,0 +1,16 @@
+{
+  "name": "fxlens",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Real-time currency conversion with true-cost intelligence and 30-day trend analysis",
+  "scripts": {
+    "install:all": "npm --prefix server install && npm --prefix client install",
+    "build": "npm --prefix client install && npm --prefix client run build && npm --prefix server install",
+    "start": "npm --prefix server start",
+    "dev:server": "npm --prefix server run dev",
+    "dev:client": "npm --prefix client run dev"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
